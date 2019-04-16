@@ -15,13 +15,13 @@ def currentHauteur(tableau,column): # retourne la ligne (hauteur) du jeu dans un
 def isTableauCase(tableau,ligne,column):
 	return tableau[ligne][column] == 0
 
-def dropPiece(tableau, ligne, column, playerPiece):
+def addPiece(tableau, ligne, column, playerPiece):
 	tableau[ligne][column] = playerPiece # 1 
 
 def add(tableau, column, playerPiece):
 	ligne = currentHauteur(tableau,column)
 	if isTableauCase(tableau, ligne ,column):
-		dropPiece(tableau,ligne,column, playerPiece)
+		addPiece(tableau,ligne,column, playerPiece)
 
 tableau = tableau()
 
