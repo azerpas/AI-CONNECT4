@@ -62,7 +62,7 @@ def positionsValides(tableau):
 
 def scorePos(tableau, piece):
 	score = 0
-	taille = 4
+	puissance = 4
 	## Score center column
 	center_array = [int(i) for i in list(tableau[:, COLONNES//2])]
 	center_count = center_array.count(piece)
@@ -70,39 +70,39 @@ def scorePos(tableau, piece):
 
 	## Score Horizontal
 	for r in range(LIGNES):
-		row_array = [int(i) for i in list(tableau[r,:])]
+		row_array = [int(i) for i in list(tableau[r,:])] # Get row as []
 		for c in range(COLONNES-3):
-			window = row_array[c:c+taille]
-			score += evaluate_window(window, piece)
+			window = row_array[c:c+puissance] # de n° colonne à taille de Puissance (4)
+			score += getScore(window, piece)
 
 	## Score Vertical
 	for c in range(COLONNES):
-		col_array = [int(i) for i in list(tableau[:,c])]
+		col_array = [int(i) for i in list(tableau[:,c])] # Get colonne as []
 		for r in range(LIGNES-3):
-			window = col_array[r:r+taille]
-			score += evaluate_window(window, piece)
+			window = col_array[r:r+puissance]
+			score += getScore(window, piece)
 
 	## Score posiive sloped diagonal
 	for r in range(LIGNES-3):
 		for c in range(COLONNES-3):
-			window = [tableau[r+i][c+i] for i in range(taille)]
-			score += evaluate_window(window, piece)
+			window = [tableau[r+i][c+i] for i in range(puissance)]
+			score += getScore(window, piece)
 
 	for r in range(LIGNES-3):
 		for c in range(COLONNES-3):
-			window = [tableau[r+3-i][c+i] for i in range(taille)]
-			score += evaluate_window(window, piece)
+			window = [tableau[r+3-i][c+i] for i in range(puissance)]
+			score += getScore(window, piece)
 
 	return score
 
-def evaluate_window(window, piece):
+def getScore(window, piece):
 	score = 0
 	empty = 0 
 	opp_piece = PLAYER_ONE
 	if piece == PLAYER_ONE:
 		opp_piece = PLAYER_AI
 
-	if window.count(piece) == 4:
+	if window.count(piece) == 4: # biggest score
 		score += 100
 	elif window.count(piece) == 3 and window.count(empty) == 1:
 		score += 5
@@ -128,7 +128,8 @@ def minmax(tableau,profondeur,maxJoueur):
 				print(str(profondeur) + " " + str(estTerminal))
 				return (None,0) # plus de place dans le tableau
 		else:
-			return (None,scorePos(tableau,PLAYER_AI))
+			score = scorePos(tableau,PLAYER_AI)
+			return (None,score)
 	if maxJoueur:
 		val = -math.inf
 		col = random.choice(positionsValides(tableau))
@@ -136,10 +137,10 @@ def minmax(tableau,profondeur,maxJoueur):
 			ligne = getLigne(tableau,c)
 			copieTab = tableau.copy() # on fait une copie du tableau pour pas vraiment drop une piece
 			addPiece(copieTab,ligne,c,PLAYER_AI)
-			print(".")
+			#print(".")
 			newVal = minmax(copieTab,profondeur-1,False)[1] 
 			#max(val, minmax(copieTab,profondeur-1,False))
-			print(newVal)
+			#print(newVal)
 			if newVal > val:
 				val = newVal
 				col = c
@@ -151,9 +152,9 @@ def minmax(tableau,profondeur,maxJoueur):
 			ligne = getLigne(tableau,c)
 			copieTab = tableau.copy()
 			addPiece(copieTab,ligne,c,PLAYER_ONE)
-			print("!")
+			#print("!")
 			newVal = minmax(copieTab,profondeur-1,True)[1]
-			print(newVal)
+			#print(newVal)
 			if newVal < val:
 				val = newVal
 				col = c
@@ -193,7 +194,7 @@ while not gameOver:
 		#if col == -1:
 		##	print(colors.reset)
 		#	exit()
-		print("col: "+str(col))
+		print("AI choosed column: "+str(col+1))
 		if estPosition(tableau, col):
 			row = getLigne(tableau, col)
 			addPiece(tableau, row, col, 2)
