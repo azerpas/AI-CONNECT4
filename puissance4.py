@@ -189,6 +189,9 @@ while not gameOver:
 			if isGagnant(tableau, 1):
 				gameOver = True
 				print("Player 1 a gagné!")
+		else:
+			print("Tu vois bien qu'il n'y a plus de place dans cette colonne...")
+			continue
 		turn = 1
 
 
