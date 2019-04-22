@@ -8,6 +8,7 @@ LIGNES = 6
 COLONNES = 7
 PLAYER_ONE = 1
 PLAYER_AI = 2
+IA_COMMENTAIRES = ["Tu peux faire mieux!","Mauvais choix...","Tu t'améliores...","C'est bien trop facile","Je m'ennuie","Oh non!","Les humains sont tellement bêtes...","N'essaye pas de me battre","Est-ce que je t'ai déjà dit que j'étais champion du monde?","Tu devrais peut-être te mettre au morpion, tu aurais peut-être plus de chances","C'est tout ce que tu peux faire?","Décevant..."]
 
 def tableau():
 	tableau = np.zeros((LIGNES,COLONNES))
@@ -15,6 +16,7 @@ def tableau():
 
 # playerPiece is either 1 or 2
 def addPiece(tableau, ligne, column, playerPiece):
+	# TODO add color for last piece
 	tableau[ligne][column] = playerPiece
 
 def estPosition(tableau, column):
@@ -167,11 +169,15 @@ gameOver = False
 turn = 0
 
 print("TAP 0 at any moment to quit")
+opponent = int(input("\nPlay against - Player 2 (tap 0) - AI (tap 1): ").replace(" ",""))
+if opponent == 1:
+	level = int(input("\n[VERY] Easy (tap 0) - Average (tap 1) - Hard (tap 2): ").replace(" ",""))
 
 while not gameOver:
 	if turn == 0:
+		print()
 		print(colors.bg.red, "PLAYER 1", colors.fg.lightgrey)
-		col = int(input("Player 1, make your choice: "))
+		col = int(input("Player 1, make your choice: ").replace(" ",""))
 		col -= 1 # we sub 1 because user will think of first column as column 1 not column 0
 		if col == -1:
 			print(colors.reset)
@@ -187,14 +193,27 @@ while not gameOver:
 
 
 	else:
-		#print(colors.bg.blue, "PLAYER 2", colors.fg.lightgrey)				
-		#col = int(input("Player 2, make your choice: "))
-		#col -= 1
-		col, value = minmax(tableau, 3, True)
-		#if col == -1:
-		##	print(colors.reset)
-		#	exit()
-		print("AI choosed column: "+str(col+1))
+		if random.randint(0,1):
+			print("AI: "+random.choice(IA_COMMENTAIRES))
+		if opponent != 0:
+			if level == 0:
+				col, value = random.choice(positionsValides(tableau)), None
+			if level == 1:
+				if not random.randint(0,3):
+					print("AI: Oh non j'ai fait une erreur!")
+					col , value = random.choice(positionsValides(tableau)), None
+				else:
+					col, value = minmax(tableau,2,True)
+			else:
+				col, value = minmax(tableau, 5, True)
+			print("\nAI choosed column: "+str(col+1))
+		else:
+			print(colors.bg.blue, "PLAYER 2", colors.fg.lightgrey)				
+			col = int(input("Player 2, make your choice: "))
+			col -= 1
+			if col == -1:
+				print(colors.reset)
+				exit()
 		if estPosition(tableau, col):
 			row = getLigne(tableau, col)
 			addPiece(tableau, row, col, 2)
