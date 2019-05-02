@@ -87,8 +87,10 @@ def isGagnant(tableau, playerPiece):
 				return True
 
 """
-* On cherche les positions valides du tableau
-* @return: [] positions valides
+ANCHOR positionsValides()
+REVIEW we're looking for available positions into the Tab
+NOTE 
+@tableau
 """
 def positionsValides(tableau):
 	pos = []
@@ -97,6 +99,13 @@ def positionsValides(tableau):
 			pos.append(c)
 	return pos
 
+"""
+ANCHOR scorePos()
+REVIEW getting score per position
+NOTE 
+@tableau
+@piece : PLAYERPIECE
+"""
 def scorePos(tableau, piece):
 	score = 0
 	puissance = 4
