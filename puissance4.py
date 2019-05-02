@@ -3,6 +3,7 @@ import sys
 import math
 from colors import colors
 import random
+import copy
 
 LIGNES = 6
 COLONNES = 7
@@ -162,6 +163,18 @@ def minmax(tableau,profondeur,maxJoueur):
 				col = c
 		return col, val
 
+def printTab(tableau):
+	tab = copy.deepcopy(tableau)
+	for l in range(LIGNES):
+		for c in range(COLONNES):
+			if tab[l][c] == 1:
+				print("X",end='')
+			elif tab[l][c] == 2:
+				print("O",end='')
+			else:
+				print("|",end='')
+		print()
+	tab = None 
 
 tableau = tableau()
 print(np.flip(tableau, 0))
@@ -228,3 +241,4 @@ while not gameOver:
 
 	print(np.flip(tableau, 0))
 	print(colors.reset)
+	#printTab(tableau)
