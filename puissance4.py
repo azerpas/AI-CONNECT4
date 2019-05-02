@@ -11,10 +11,23 @@ PLAYER_ONE = 1
 PLAYER_AI = 2
 IA_COMMENTAIRES = ["Tu peux faire mieux!","Mauvais choix...","Tu t'améliores...","C'est bien trop facile","Je m'ennuie","Oh non!","Les humains sont tellement bêtes...","N'essaye pas de me battre","Est-ce que je t'ai déjà dit que j'étais champion du monde?","Tu devrais peut-être te mettre au morpion, tu aurais peut-être plus de chances","C'est tout ce que tu peux faire?","Décevant..."]
 
+'''
+ANCHOR function tableau()
+REVIEW creating a tab with numpy module
+'''
 def tableau():
 	tableau = np.zeros((LIGNES,COLONNES))
 	return tableau
 
+'''
+ANCHOR function addPiece() 
+REVIEW adding player piece into a position
+NOTE 
+@tableau 
+@ligne
+@column
+@playerPiece : PLAYER_ONE or PLAYER_AI 
+'''
 # playerPiece is either 1 or 2
 def addPiece(tableau, ligne, column, playerPiece):
 	# TODO add color for last piece
