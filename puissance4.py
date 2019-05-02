@@ -141,6 +141,13 @@ def scorePos(tableau, piece):
 
 	return score
 
+"""
+ANCHOR getScore()
+REVIEW for given window (col,row,diagonal...) check the score for best result
+NOTE 
+@window : given array of pieces
+@piece : PLAYERPIECE
+"""
 def getScore(window, piece):
 	score = 0
 	empty = 0 
@@ -160,9 +167,25 @@ def getScore(window, piece):
 
 	return score
 
+"""
+ANCHOR estTerminal()
+REVIEW check if there's a winning pos for either player or no more valid positions
+NOTE 
+@tableau
+"""
 def estTerminal(tableau):
 	return isGagnant(tableau, PLAYER_ONE) or isGagnant(tableau, PLAYER_AI) or len(positionsValides(tableau)) == 0
 
+"""
+ANCHOR minmax()
+REVIEW use minmax algorithm to simulate AI thinking and get best play
+NOTE 
+@tableau
+@profondeur : how far does it have to look for best play
+@maxJoueur : maxi player chances 
+TODO comment inner blocks
+FIXME math.inf
+"""
 def minmax(tableau,profondeur,maxJoueur):
 	if profondeur == 0 or estTerminal(tableau):
 		if estTerminal(tableau):
