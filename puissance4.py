@@ -229,6 +229,10 @@ def minmax(tableau,profondeur,maxJoueur):
 				col = c
 		return col, val
 
+"""
+ANCHOR printTab()
+REVIEW printing the tab
+"""
 def printTab(tableau):
 	tab = copy.deepcopy(tableau)
 	for l in range(LIGNES):
