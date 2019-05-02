@@ -33,17 +33,38 @@ def addPiece(tableau, ligne, column, playerPiece):
 	# TODO add color for last piece
 	tableau[ligne][column] = playerPiece
 
+'''
+ANCHOR function estPosition()
+REVIEW checking if position is empty
+NOTE 
+@tableau
+@column
+'''
 def estPosition(tableau, column):
 	# Checking if position is empty
 	return tableau[LIGNES-1][column] == 0
 	# - 1 cause array starts at 0 
 
+'''
+ANCHOR function getLigne()
+REVIEW for a given column, check what's the current line available
+NOTE 
+@tableau
+@column
+'''
 def getLigne(tableau, column):
 	# We check in A SPECIFIC column what's the current line
 	for l in range(LIGNES):
 		if tableau[l][column] == 0:
 			return l 
 
+'''
+ANCHOR function isGagnant()
+REVIEW checking for a winning position
+NOTE
+@tableau
+@playerPiece : PLAYER_ONE or PLAYER_AI 
+'''
 def isGagnant(tableau, playerPiece):
 	for c in range(COLONNES-3): # Check horizontal
 		for l in range(LIGNES):
